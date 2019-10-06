@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ag.DbData.PostgreSQL</name>
+    </assembly>
+    <members>
+        <member name="T:ag.DbData.PostgreSQL.Extensions.Extensions">
+            <summary>
+            Represents <see cref="N:ag.DbData.PostgreSQL"/> extensions.
+            </summary>
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.Extensions.Extensions.AddAgPostgreSQL(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Appends the registration of <see cref="T:ag.DbData.PostgreSQL.Factories.PostgreSQLDbDataFactory"/> and <see cref="T:ag.DbData.PostgreSQL.PostgreSQLDbDataObject"/> services to <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.
+            </summary>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> to add the services to.</param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.</returns>
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.Extensions.Extensions.AddAgPostgreSQL(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfigurationSection)">
+            <summary>
+            Appends the registration of <see cref="T:ag.DbData.PostgreSQL.Factories.PostgreSQLDbDataFactory"/> and <see cref="T:ag.DbData.PostgreSQL.PostgreSQLDbDataObject"/> services to <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> and registers a configuration instance.
+            </summary>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> to add the services to.</param>
+            <param name="configurationSection">The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationSection"/> being bound.</param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.</returns>
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.Extensions.Extensions.AddAgPostgreSQL(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{ag.DbData.Abstraction.DbDataSettings})">
+            <summary>
+            Appends the registration of <see cref="T:ag.DbData.PostgreSQL.Factories.PostgreSQLDbDataFactory"/> and <see cref="T:ag.DbData.PostgreSQL.PostgreSQLDbDataObject"/> services to <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> and configures the options.
+            </summary>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> to add the services to.</param>
+            <param name="configureOptions">The action used to configure the options.</param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.</returns>
+        </member>
+        <member name="T:ag.DbData.PostgreSQL.Factories.IPostgreSQLDbDataFactory">
+            <inheritdoc />
+        </member>
+        <member name="T:ag.DbData.PostgreSQL.Factories.PostgreSQLDbDataFactory">
+            <summary>
+            Represents OracleDbDataFactory object.
+            </summary>
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.Factories.PostgreSQLDbDataFactory.Create(System.String)">
+            <summary>
+            Creates object of type <see cref="T:ag.DbData.PostgreSQL.PostgreSQLDbDataObject"/>.
+            </summary>
+            <param name="connectionString">Database connection string</param>.
+            <returns><see cref="T:ag.DbData.Abstraction.IDbDataObject"/> implementation of <see cref="T:ag.DbData.PostgreSQL.PostgreSQLDbDataObject"/> interface.</returns>
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.Factories.PostgreSQLDbDataFactory.#ctor(System.IServiceProvider)">
+            <summary>
+            Creates new OracleDbDataFactory object.
+            </summary>
+            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
+        </member>
+        <member name="T:ag.DbData.PostgreSQL.PostgreSQLDbDataObject">
+            <summary>
+            Represents PostgreSQLDbDataObject object.
+            </summary>
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.#ctor(Microsoft.Extensions.Logging.ILogger{ag.DbData.Abstraction.IDbDataObject},Microsoft.Extensions.Options.IOptions{ag.DbData.Abstraction.DbDataSettings})">
+            <summary>
+            Creates new instance of <see cref="T:ag.DbData.PostgreSQL.PostgreSQLDbDataObject"/>.
+            </summary>
+            <param name="logger"><see cref="T:Microsoft.Extensions.Logging.ILogger"/> object.</param>
+            <param name="options"><see cref="T:ag.DbData.Abstraction.DbDataSettings"/> options.</param>
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.FillDataSet(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.FillDataSet(System.String,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.FillDataSet(System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.FillDataSet(System.String,System.Collections.Generic.IEnumerable{System.String},System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.FillDataSetInTransaction(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.FillDataSetInTransaction(System.String,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.FillDataSetInTransaction(System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.FillDataSetInTransaction(System.String,System.Collections.Generic.IEnumerable{System.String},System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.FillDataTable(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.FillDataTable(System.String,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.FillDataTableInTransaction(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.FillDataTableInTransaction(System.String,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.ExecuteCommand(System.Data.Common.DbCommand)">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.ExecuteCommand(System.Data.Common.DbCommand,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.ExecuteCommandInTransaction(System.Data.Common.DbCommand)">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.ExecuteCommandInTransaction(System.Data.Common.DbCommand,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.BeginTransaction(System.String)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>
