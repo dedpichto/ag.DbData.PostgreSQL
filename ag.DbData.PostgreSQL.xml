@@ -116,5 +116,29 @@
         <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.BeginTransaction(System.String)">
             <inheritdoc />
         </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.ExecuteAsync(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.ExecuteAsync(System.String,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.ExecuteAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.ExecuteAsync(System.String,System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.GetScalarAsync(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.GetScalarAsync(System.String,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.GetScalarAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.GetScalarAsync(System.String,System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>
