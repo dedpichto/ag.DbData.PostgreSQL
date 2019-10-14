@@ -1,7 +1,7 @@
-﻿using System;
-using ag.DbData.Abstraction;
+﻿using ag.DbData.Abstraction;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
+using System;
 
 namespace ag.DbData.PostgreSQL.Factories
 {

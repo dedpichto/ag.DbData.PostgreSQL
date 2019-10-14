@@ -1,5 +1,7 @@
 ﻿using ag.DbData.Abstraction;
+using ag.DbData.Abstraction.Services;
 using ag.DbData.PostgreSQL.Factories;
+using ag.DbData.PostgreSQL.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -18,6 +20,8 @@ namespace ag.DbData.PostgreSQL.Extensions
         /// <returns><see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection AddAgPostgreSQL(this IServiceCollection services)
         {
+            services.AddSingleton<PostgreSQLStringProvider>();
+            services.AddSingleton<IDbDataStringProviderFactory<PostgreSQLStringProvider>, PostgreSQLStringProviderFactory>();
             services.AddSingleton<IPostgreSQLDbDataFactory, PostgreSQLDbDataFactory>();
             services.AddTransient<PostgreSQLDbDataObject>();
             return services;
@@ -31,8 +35,7 @@ namespace ag.DbData.PostgreSQL.Extensions
         /// <returns><see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection AddAgPostgreSQL(this IServiceCollection services, IConfigurationSection configurationSection)
         {
-            services.AddSingleton<IPostgreSQLDbDataFactory, PostgreSQLDbDataFactory>();
-            services.AddTransient<PostgreSQLDbDataObject>();
+            services.AddAgPostgreSQL();
             services.Configure<DbDataSettings>(configurationSection);
             return services;
         }
@@ -46,8 +49,7 @@ namespace ag.DbData.PostgreSQL.Extensions
         public static IServiceCollection AddAgPostgreSQL(this IServiceCollection services,
             Action<DbDataSettings> configureOptions)
         {
-            services.AddSingleton<IPostgreSQLDbDataFactory, PostgreSQLDbDataFactory>();
-            services.AddTransient<PostgreSQLDbDataObject>();
+            services.AddAgPostgreSQL();
             services.Configure(configureOptions);
             return services;
         }

@@ -58,12 +58,13 @@
             Represents PostgreSQLDbDataObject object.
             </summary>
         </member>
-        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.#ctor(Microsoft.Extensions.Logging.ILogger{ag.DbData.Abstraction.IDbDataObject},Microsoft.Extensions.Options.IOptions{ag.DbData.Abstraction.DbDataSettings})">
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.#ctor(Microsoft.Extensions.Logging.ILogger{ag.DbData.Abstraction.IDbDataObject},Microsoft.Extensions.Options.IOptions{ag.DbData.Abstraction.DbDataSettings},ag.DbData.Abstraction.Services.IDbDataStringProviderFactory{ag.DbData.PostgreSQL.Services.PostgreSQLStringProvider})">
             <summary>
             Creates new instance of <see cref="T:ag.DbData.PostgreSQL.PostgreSQLDbDataObject"/>.
             </summary>
             <param name="logger"><see cref="T:Microsoft.Extensions.Logging.ILogger"/> object.</param>
             <param name="options"><see cref="T:ag.DbData.Abstraction.DbDataSettings"/> options.</param>
+            <param name="stringProviderFactory"><see cref="T:ag.DbData.PostgreSQL.PostgreSQLDbDataObject"/> object.</param>
         </member>
         <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.FillDataSet(System.String)">
             <inheritdoc />
@@ -139,6 +140,28 @@
         </member>
         <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.GetScalarAsync(System.String,System.Int32,System.Threading.CancellationToken)">
             <inheritdoc />
+        </member>
+        <member name="T:ag.DbData.PostgreSQL.Services.PostgreSQLStringProvider">
+            <summary>
+            Represents concrete class inherited from <see cref="T:ag.DbData.Abstraction.Services.DbDataStringProvider"/>.
+            </summary>
+        </member>
+        <member name="T:ag.DbData.PostgreSQL.Services.PostgreSQLStringProviderFactory">
+            <summary>
+            Represents <see cref="T:ag.DbData.PostgreSQL.Services.PostgreSQLStringProviderFactory"/> object.
+            </summary>
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.Services.PostgreSQLStringProviderFactory.#ctor(System.IServiceProvider)">
+            <summary>
+            Creates new instance of <see cref="T:ag.DbData.PostgreSQL.Services.PostgreSQLStringProviderFactory"/>.
+            </summary>
+            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/>.</param>
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.Services.PostgreSQLStringProviderFactory.Get">
+            <summary>
+            Creates object of type <see cref="T:ag.DbData.PostgreSQL.Services.PostgreSQLStringProvider"/>.
+            </summary>
+            <returns>Object of type <see cref="T:ag.DbData.PostgreSQL.Services.PostgreSQLStringProvider"/>.</returns>
         </member>
     </members>
 </doc>

@@ -1,5 +1,8 @@
 ﻿using ag.DbData.Abstraction;
+using ag.DbData.Abstraction.Services;
+using ag.DbData.PostgreSQL.Services;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -8,7 +11,6 @@ using System.Data.Common;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
 
 namespace ag.DbData.PostgreSQL
 {
@@ -23,7 +25,10 @@ namespace ag.DbData.PostgreSQL
         /// </summary>
         /// <param name="logger"><see cref="ILogger"/> object.</param>
         /// <param name="options"><see cref="DbDataSettings"/> options.</param>
-        public PostgreSQLDbDataObject(ILogger<IDbDataObject> logger, IOptions<DbDataSettings> options) : base(logger, options) { }
+        /// <param name="stringProviderFactory"><see cref="PostgreSQLDbDataObject"/> object.</param>
+        public PostgreSQLDbDataObject(ILogger<IDbDataObject> logger, IOptions<DbDataSettings> options, IDbDataStringProviderFactory<PostgreSQLStringProvider> stringProviderFactory) :
+            base(logger, options, stringProviderFactory.Get())
+        { }
         #endregion
 
         #region Overrides
@@ -102,7 +107,7 @@ namespace ag.DbData.PostgreSQL
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Error at BeginTransaction");
+                Logger?.LogError(ex, "Error at BeginTransaction");
                 throw new DbDataException(ex, "");
             }
         }
@@ -256,7 +261,7 @@ namespace ag.DbData.PostgreSQL
                 return await Task.Run(async () =>
                 {
                     int rows;
-                    using (var asyncConnection = new NpgsqlConnection(Connection.ConnectionString))
+                    using (var asyncConnection = new NpgsqlConnection(StringProvider.ConnectionString))
                     {
                         using (var cmd = asyncConnection.CreateCommand())
                         {
@@ -291,7 +296,7 @@ namespace ag.DbData.PostgreSQL
                 return await Task.Run(async () =>
                 {
                     object obj;
-                    using (var asyncConnection = new NpgsqlConnection(Connection.ConnectionString))
+                    using (var asyncConnection = new NpgsqlConnection(StringProvider.ConnectionString))
                     {
                         using (var cmd = asyncConnection.CreateCommand())
                         {
