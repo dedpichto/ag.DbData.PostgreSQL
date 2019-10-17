@@ -1,6 +1,5 @@
 ﻿using ag.DbData.Abstraction;
 using ag.DbData.Abstraction.Services;
-using ag.DbData.PostgreSQL.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Npgsql;
@@ -25,9 +24,9 @@ namespace ag.DbData.PostgreSQL
         /// </summary>
         /// <param name="logger"><see cref="ILogger"/> object.</param>
         /// <param name="options"><see cref="DbDataSettings"/> options.</param>
-        /// <param name="stringProviderFactory"><see cref="PostgreSQLDbDataObject"/> object.</param>
-        public PostgreSQLDbDataObject(ILogger<IDbDataObject> logger, IOptions<DbDataSettings> options, IDbDataStringProviderFactory<PostgreSQLStringProvider> stringProviderFactory) :
-            base(logger, options, stringProviderFactory.Get())
+        /// <param name="stringProvider"><see cref="IDbDataStringProvider"/> object.</param>
+        public PostgreSQLDbDataObject(ILogger<IDbDataObject> logger, IOptions<DbDataSettings> options, IDbDataStringProvider stringProvider) :
+            base(logger, options, stringProvider)
         { }
         #endregion
 
