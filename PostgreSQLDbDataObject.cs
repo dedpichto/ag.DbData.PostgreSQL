@@ -19,15 +19,21 @@ namespace ag.DbData.PostgreSQL
     public class PostgreSQLDbDataObject : DbDataObject
     {
         #region ctor
+
         /// <summary>
         /// Creates new instance of <see cref="PostgreSQLDbDataObject"/>.
         /// </summary>
         /// <param name="logger"><see cref="ILogger"/> object.</param>
         /// <param name="options"><see cref="DbDataSettings"/> options.</param>
         /// <param name="stringProvider"><see cref="IDbDataStringProvider"/> object.</param>
-        public PostgreSQLDbDataObject(ILogger<IDbDataObject> logger, IOptions<DbDataSettings> options, IDbDataStringProvider stringProvider) :
+        public PostgreSQLDbDataObject(ILogger<IDbDataObject> logger, IOptions<PostgreSQLDbDataSettings> options,
+            IDbDataStringProvider stringProvider) :
             base(logger, options, stringProvider)
-        { }
+        {
+            var connectionString = StringProvider.ConnectionString;
+            if (!string.IsNullOrEmpty(connectionString))
+                Connection = new NpgsqlConnection(connectionString);
+        }
         #endregion
 
         #region Overrides
@@ -153,13 +159,9 @@ namespace ag.DbData.PostgreSQL
                     ? (NpgsqlConnection)TransConnection
                     : (NpgsqlConnection)Connection))
                 {
-                    if (timeout != -1)
-                    {
-                        if (timeout >= 0)
-                            cmd.CommandTimeout = timeout;
-                        else
-                            throw new ArgumentException("Invalid CommandTimeout value", nameof(timeout));
-                    }
+                    if (!IsValidTimeout(cmd, timeout))
+                        throw new ArgumentException("Invalid CommandTimeout value", nameof(timeout));
+
                     if (inTransaction)
                         cmd.Transaction = (NpgsqlTransaction)Transaction;
                     using (var da = new NpgsqlDataAdapter(cmd))
@@ -193,13 +195,9 @@ namespace ag.DbData.PostgreSQL
                     ? (NpgsqlConnection)TransConnection
                     : (NpgsqlConnection)Connection))
                 {
-                    if (timeout != -1)
-                    {
-                        if (timeout >= 0)
-                            cmd.CommandTimeout = timeout;
-                        else
-                            throw new ArgumentException("Invalid CommandTimeout value", nameof(timeout));
-                    }
+                    if (!IsValidTimeout(cmd, timeout))
+                        throw new ArgumentException("Invalid CommandTimeout value", nameof(timeout));
+
                     if (inTransaction)
                         cmd.Transaction = (NpgsqlTransaction)Transaction;
                     using (var da = new NpgsqlDataAdapter(cmd))
@@ -220,13 +218,9 @@ namespace ag.DbData.PostgreSQL
         {
             try
             {
-                if (timeout != -1)
-                {
-                    if (timeout >= 0)
-                        cmd.CommandTimeout = timeout;
-                    else
-                        throw new ArgumentException("Invalid CommandTimeout value", nameof(timeout));
-                }
+                if (!IsValidTimeout(cmd, timeout))
+                    throw new ArgumentException("Invalid CommandTimeout value", nameof(timeout));
+
                 if (inTransaction)
                 {
                     cmd.Connection = (NpgsqlConnection)TransConnection;
@@ -265,13 +259,8 @@ namespace ag.DbData.PostgreSQL
                         using (var cmd = asyncConnection.CreateCommand())
                         {
                             cmd.CommandText = query;
-                            if (timeout != -1)
-                            {
-                                if (timeout >= 0)
-                                    cmd.CommandTimeout = timeout;
-                                else
-                                    throw new ArgumentException("Invalid CommandTimeout value", nameof(timeout));
-                            }
+                            if (!IsValidTimeout(cmd, timeout))
+                                throw new ArgumentException("Invalid CommandTimeout value", nameof(timeout));
 
                             await asyncConnection.OpenAsync(cancellationToken);
 
@@ -300,13 +289,8 @@ namespace ag.DbData.PostgreSQL
                         using (var cmd = asyncConnection.CreateCommand())
                         {
                             cmd.CommandText = query;
-                            if (timeout != -1)
-                            {
-                                if (timeout >= 0)
-                                    cmd.CommandTimeout = timeout;
-                                else
-                                    throw new ArgumentException("Invalid CommandTimeout value", nameof(timeout));
-                            }
+                            if (!IsValidTimeout(cmd, timeout))
+                                throw new ArgumentException("Invalid CommandTimeout value", nameof(timeout));
 
                             await asyncConnection.OpenAsync(cancellationToken);
 

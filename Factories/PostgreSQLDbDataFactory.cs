@@ -6,11 +6,21 @@ using System;
 namespace ag.DbData.PostgreSQL.Factories
 {
     /// <summary>
-    /// Represents OracleDbDataFactory object.
+    /// Represents PostgreSQLDbDataFactory object.
     /// </summary>
     public class PostgreSQLDbDataFactory : IPostgreSQLDbDataFactory
     {
         private readonly IServiceProvider _serviceProvider;
+
+        /// <summary>
+        /// Creates object of type <see cref="PostgreSQLDbDataObject"/>.
+        /// </summary>
+        /// <returns><see cref="IDbDataObject"/> implementation of <see cref="PostgreSQLDbDataObject"/> interface.</returns>
+        public IDbDataObject Create()
+        {
+            var dbObject = _serviceProvider.GetService<PostgreSQLDbDataObject>();
+            return dbObject;
+        }
 
         /// <summary>
         /// Creates object of type <see cref="PostgreSQLDbDataObject"/>.
@@ -23,10 +33,9 @@ namespace ag.DbData.PostgreSQL.Factories
             dbObject.Connection = new NpgsqlConnection(connectionString);
             return dbObject;
         }
-
-
+        
         /// <summary>
-        /// Creates new OracleDbDataFactory object.
+        /// Creates new PostgreSQLDbDataFactory object.
         /// </summary>
         /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
         public PostgreSQLDbDataFactory(IServiceProvider serviceProvider)
