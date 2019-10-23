@@ -16,7 +16,7 @@ namespace ag.DbData.PostgreSQL
     /// <summary>
     /// Represents PostgreSQLDbDataObject object.
     /// </summary>
-    public class PostgreSQLDbDataObject : DbDataObject
+    internal class PostgreSQLDbDataObject : DbDataObject
     {
         #region ctor
 

@@ -8,7 +8,7 @@ namespace ag.DbData.PostgreSQL.Factories
     /// <summary>
     /// Represents PostgreSQLDbDataFactory object.
     /// </summary>
-    public class PostgreSQLDbDataFactory : IPostgreSQLDbDataFactory
+    internal class PostgreSQLDbDataFactory : IPostgreSQLDbDataFactory
     {
         private readonly IServiceProvider _serviceProvider;
 
