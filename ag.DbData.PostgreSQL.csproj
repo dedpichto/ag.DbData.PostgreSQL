@@ -9,6 +9,7 @@
     <PackageProjectUrl>https://github.com/dedpichto/ag.DbData.PostgreSQL</PackageProjectUrl>
     <RepositoryUrl>https://github.com/dedpichto/ag.DbData.PostgreSQL</RepositoryUrl>
     <PackageTags>Database, PostgreSQL, ADO.NET, .NET, Core, Snandard, Framework</PackageTags>
+    <PackageReleaseNotes>Added ConnectionString to settings, added parameterless Create() method (see readme file for more information)</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -30,13 +31,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="ag.DbData.Abstraction" Version="3.0.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.0.0" />
     <PackageReference Include="Npgsql" Version="4.1.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ag.DbData.Abstraction\ag.DbData.Abstraction.csproj" />
   </ItemGroup>
 
 </Project>
