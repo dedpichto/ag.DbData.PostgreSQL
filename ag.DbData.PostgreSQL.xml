@@ -123,6 +123,9 @@
         <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.BeginTransaction(System.String)">
             <inheritdoc />
         </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.BeginTransaction">
+            <inheritdoc />
+        </member>
         <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.ExecuteAsync(System.String)">
             <inheritdoc />
         </member>

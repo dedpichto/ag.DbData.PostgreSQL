@@ -92,29 +92,13 @@ namespace ag.DbData.PostgreSQL
         /// <inheritdoc />
         public override bool BeginTransaction(string connectionString)
         {
-            try
-            {
-                if (string.IsNullOrEmpty(connectionString))
-                    return false;
-                if (TransConnection == null)
-                {
-                    TransConnection = new NpgsqlConnection(connectionString);
-                }
+            return innerBeginTransaction(connectionString);
+        }
 
-                if (TransConnection == null)
-                {
-                    return false;
-                }
-                if (TransConnection.State != ConnectionState.Open)
-                    TransConnection.Open();
-                Transaction = TransConnection.BeginTransaction();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Logger?.LogError(ex, "Error at BeginTransaction");
-                throw new DbDataException(ex, "");
-            }
+        /// <inheritdoc />
+        public override bool BeginTransaction()
+        {
+            return innerBeginTransaction(StringProvider.ConnectionString);
         }
 
         /// <inheritdoc />
@@ -150,6 +134,33 @@ namespace ag.DbData.PostgreSQL
         #endregion
 
         #region private procedures
+        private bool innerBeginTransaction(string connectionString)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(connectionString))
+                    return false;
+                if (TransConnection == null)
+                {
+                    TransConnection = new NpgsqlConnection(connectionString);
+                }
+
+                if (TransConnection == null)
+                {
+                    return false;
+                }
+                if (TransConnection.State != ConnectionState.Open)
+                    TransConnection.Open();
+                Transaction = TransConnection.BeginTransaction();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger?.LogError(ex, "Error at BeginTransaction");
+                throw new DbDataException(ex, "");
+            }
+        }
+
         private DataSet innerFillDataSet(string query, IEnumerable<string> tables, int timeout, bool inTransaction)
         {
             try
