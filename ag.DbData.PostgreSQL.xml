@@ -108,6 +108,18 @@
         <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.FillDataTableInTransaction(System.String,System.Int32)">
             <inheritdoc />
         </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.FillDataTable(System.Data.Common.DbCommand)">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.FillDataTable(System.Data.Common.DbCommand,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.FillDataTableInTransaction(System.Data.Common.DbCommand)">
+            <inheritdoc />
+        </member>
+        <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.FillDataTableInTransaction(System.Data.Common.DbCommand,System.Int32)">
+            <inheritdoc />
+        </member>
         <member name="M:ag.DbData.PostgreSQL.PostgreSQLDbDataObject.ExecuteCommand(System.Data.Common.DbCommand)">
             <inheritdoc />
         </member>

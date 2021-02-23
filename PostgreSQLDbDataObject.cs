@@ -3,11 +3,13 @@ using ag.DbData.Abstraction.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Npgsql;
+using NpgsqlTypes;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -76,6 +78,18 @@ namespace ag.DbData.PostgreSQL
             innerFillDataTable(query, timeout, true);
 
         /// <inheritdoc />
+        public override DataTable FillDataTable(DbCommand dbCommand) => innerFillDataTable((NpgsqlCommand)dbCommand, -1, false);
+
+        /// <inheritdoc />
+        public override DataTable FillDataTable(DbCommand dbCommand, int timeout) => innerFillDataTable((NpgsqlCommand)dbCommand, timeout, false);
+
+        /// <inheritdoc />
+        public override DataTable FillDataTableInTransaction(DbCommand dbCommand) => innerFillDataTable((NpgsqlCommand)dbCommand, -1, true);
+
+        /// <inheritdoc />
+        public override DataTable FillDataTableInTransaction(DbCommand dbCommand, int timeout) => innerFillDataTable((NpgsqlCommand)dbCommand, timeout, true);
+
+        /// <inheritdoc />
         public override int ExecuteCommand(DbCommand cmd) => innerExecuteCommand((NpgsqlCommand)cmd, -1, false);
 
         /// <inheritdoc />
@@ -130,10 +144,10 @@ namespace ag.DbData.PostgreSQL
         /// <inheritdoc />
         public override async Task<object> GetScalarAsync(string query, int timeout,
             CancellationToken cancellationToken) => await innerGetScalarAsync(query, cancellationToken, timeout);
-
         #endregion
 
         #region private procedures
+
         private bool innerBeginTransaction(string connectionString)
         {
             try
@@ -156,7 +170,8 @@ namespace ag.DbData.PostgreSQL
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, "Error at BeginTransaction");
+                var method = MethodBase.GetCurrentMethod();
+                Logger?.LogError(ex, $"Error in: {method.Module.Name} {method.Name}");
                 throw new DbDataException(ex, "");
             }
         }
@@ -192,7 +207,8 @@ namespace ag.DbData.PostgreSQL
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Error at FillDataSet; command text: {query}");
+                var method = MethodBase.GetCurrentMethod();
+                Logger?.LogError(ex, $"Error in: {method.Module.Name} {method.Name}; command text: {query}");
                 throw new DbDataException(ex, query);
             }
         }
@@ -220,8 +236,35 @@ namespace ag.DbData.PostgreSQL
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Error at FillDataTable; command text: {query}");
+                var method = MethodBase.GetCurrentMethod();
+                Logger?.LogError(ex, $"Error in: {method.Module.Name} {method.Name}; command text: {query}");
                 throw new DbDataException(ex, query);
+            }
+        }
+
+        private DataTable innerFillDataTable(NpgsqlCommand command, int timeout, bool inTransaction)
+        {
+            try
+            {
+                var table = new DataTable();
+                command.Connection = inTransaction
+                    ? (NpgsqlConnection)TransConnection
+                    : (NpgsqlConnection)Connection;
+                if (!IsValidTimeout(command, timeout))
+                    throw new ArgumentException("Invalid CommandTimeout value", nameof(timeout));
+
+                if (inTransaction)
+                    command.Transaction = (NpgsqlTransaction)Transaction;
+                using (var da = new NpgsqlDataAdapter(command))
+                {
+                    da.Fill(table);
+                }
+                return table;
+            }
+            catch (Exception ex)
+            {
+                Logger?.LogError(ex, $"Error at FillDataTable; command text: {command.CommandText}");
+                throw new DbDataException(ex, command.CommandText);
             }
         }
 
@@ -247,7 +290,8 @@ namespace ag.DbData.PostgreSQL
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Error at ExecuteCommand; command text: {cmd.CommandText}");
+                var method = MethodBase.GetCurrentMethod();
+                Logger?.LogError(ex, $"Error in: {method.Module.Name} {method.Name}; command text: {cmd.CommandText}");
                 throw new DbDataException(ex, cmd.CommandText);
             }
             finally
@@ -283,7 +327,8 @@ namespace ag.DbData.PostgreSQL
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Error at ExecuteCommandAsync; command text: {query}");
+                var method = MethodBase.GetCurrentMethod();
+                Logger?.LogError(ex, $"Error in: {method.Module.Name} {method.Name}; command text: {query}");
                 throw new DbDataException(ex, query);
             }
         }
@@ -313,7 +358,8 @@ namespace ag.DbData.PostgreSQL
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Error at GetScalarAsync; command text: {query}");
+                var method = MethodBase.GetCurrentMethod();
+                Logger?.LogError(ex, $"Error in: {method.Module.Name} {method.Name}; command text: {query}");
                 throw new DbDataException(ex, query);
             }
         }
