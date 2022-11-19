@@ -53,6 +53,13 @@
             <param name="connectionString">Database connection string</param>.
             <returns><see cref="T:ag.DbData.Abstraction.IDbDataObject"/> implementation of <see cref="T:ag.DbData.PostgreSQL.PostgreSQLDbDataObject"/> interface.</returns>
         </member>
+        <member name="M:ag.DbData.PostgreSQL.Factories.PostgreSQLDbDataFactory.Create(System.Int32)">
+            <summary>
+            Creates object of type <see cref="T:ag.DbData.PostgreSQL.PostgreSQLDbDataObject"/>.
+            </summary>
+            <param name="defaultCommandTimeOut">Replaces default coommand timeout of provider</param>
+            <returns></returns>
+        </member>
         <member name="M:ag.DbData.PostgreSQL.Factories.PostgreSQLDbDataFactory.#ctor(System.IServiceProvider)">
             <summary>
             Creates new PostgreSQLDbDataFactory object.
